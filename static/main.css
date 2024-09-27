@@ -558,6 +558,10 @@ video {
   position: static;
 }
 
+.block {
+  display: block;
+}
+
 .bg-slate-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(148 163 184 / var(--tw-bg-opacity));
