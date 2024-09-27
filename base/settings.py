@@ -1,17 +1,13 @@
 from pathlib import Path
 import os
 from decouple import config
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET_KEY = 'django-insecure-)jxqif3%2(k!*5d$@95y&%^cnx=%so2rx3^&jzh0vqb=qt0tyj'
-
 SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", cast=bool)
-AGE = config("AGE", default=25, cast=int)
-ALLOWED_HOSTS = ['*']
-
-import logging
-logging.warning(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
+DEBUG = config("DEBUG", default=True, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -22,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'base',
 ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -30,9 +27,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise should be here
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
 ROOT_URLCONF = 'base.urls'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -51,23 +50,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
-from decouple import config
-import dj_database_url
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'adminportal',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres', 
-#         'HOST': 'localhost',    
-#         'PORT': '5432',
-#     }
-# }
 DATABASES = {
     'default': dj_database_url.parse(config('DATABASE_URL'))
 }
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-ROOT_URLCONF = 'django_project.urls'
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -87,8 +80,5 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
