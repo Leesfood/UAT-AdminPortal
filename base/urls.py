@@ -13,6 +13,7 @@ urlpatterns = [
     path('adminportal/departments/', views.admin_departments, name='admin_departments'),  
     path('adminportal/sections/', views.admin_sections, name='admin_sections'),  
     path('adminportal/sites/', views.admin_sites, name='admin_sites'),  
+    path('adminportal/leaveTypes/', views.admin_leaveTypes, name='admin_leaveTypes'),  
     path('adminportal/reports/', views.admin_reports, name='admin_reports'),
     path('adminportal/users/', views.admin_users, name='admin_users'),
     path('adminportal/settings/', views.admin_settings, name='admin_settings'),

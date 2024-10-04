@@ -19,6 +19,9 @@ def admin_sections(request):
 def admin_sites(request):
     return render(request, 'admin/sites.html')
 @login_required
+def admin_leaveTypes(request):
+    return render(request, 'admin/leaveTypes.html')
+@login_required
 def admin_reports(request):
     return render(request, 'admin/reports.html')
 @login_required
