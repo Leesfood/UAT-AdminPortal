@@ -4,12 +4,25 @@ from decouple import config
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = ['*']
+# settings.py
+
+
+
+# LOGIN_REDIRECT_URL = '/admin/auth/'
+LOGIN_REDIRECT_URL = '/adminportal/home/'
+LOGOUT_REDIRECT_URL = 'login'
+
+UNFOLD = {
+    'SITE_HEADER': 'HRM SYSTEM ',  
+    'SHOW_SIDEBAR': True,  # Enable sidebar
+    'MENU_STYLE': 'sidebar',  # Choose menu style ('sidebar' or 'navbar')
+}
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -17,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base',
+    'customadmin',
+  
 ]
 
 MIDDLEWARE = [
@@ -29,13 +44,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-
 ROOT_URLCONF = 'base.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Use BASE_DIR for an absolute path
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,8 +65,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'base.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'adminportal',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres', 
+        'HOST': 'localhost',   
+        'PORT': '5432',         
+    }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.parse(config('DATABASE_URL'))
+# }
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = 'static/'

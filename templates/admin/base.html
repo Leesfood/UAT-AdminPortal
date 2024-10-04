@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard{% endblock %}</title>
+ 
+    {% block extrastyle %}
+    <link rel="stylesheet" href="{% static "main.css"%}">
+    {% endblock %}
+    
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-red-700 text-white p-4">
+        <div class=" mx-auto">
+            <div class="flex justify-between">
+                <div class="text-xl font-semibold">
+                    Admin Portal System 
+                </div>
+                <div>
+                    <a href="#" class="text-white">Profile</a>
+                    <a href="{% url 'logout' %}" class="ml-4 text-white">Logout</a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex ">
+        <!-- Sidebar -->
+        <!-- color-[#00992B] -->
+        <aside class="w-64  bg-white border-gray-100 shadow-gray-100  shadow border-t-2   text-slate-950 min-h-screen">
+
+            <div class="">
+
+                <ul class="">
+                    <li class="">
+                        <a href="{% url 'admin_dashboard' %}" class="block px-8 py-3 text-[17px] mt-5 hover:bg-red-600  hover:text-white">Dashboard</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'admin_employees' %}" class="block px-8 py-3 text-[17px] hover:bg-red-600 hover:text-white">Employees List</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'admin_departments' %}" class="block px-8 py-3 text-[17px] hover:bg-red-600 hover:text-white">Departments List</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'admin_sections' %}" class="block px-8 py-3 text-[17px] hover:bg-red-600 hover:text-white">Sections List</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'admin_sites' %}" class="block px-8 py-3 text-[17px] hover:bg-red-600 hover:text-white">Sites List</a>
+                    </li>
+                   
+                    <li class="">
+                        <a href="{% url 'admin_users' %}" class="block px-8 py-3 text-[17px] hover:bg-red-600 hover:text-white">Users List</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'admin_settings' %}" class="block px-8 py-3 text-[17px] hover:bg-red-600 hover:text-white">Settings</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'admin_reports' %}" class="block px-8 py-3 text-[17px] hover:bg-red-600 hover:text-white">Reports Tool</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 ">
+            {% block content %}
+            <!-- Content specific to each page will go here -->
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>
