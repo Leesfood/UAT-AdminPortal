@@ -8,6 +8,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Default Django admin site
     path('customadmin/', custom_admin_site.urls), 
     path('', views.home, name="home"),  # Your homepage or other app views
+    path('user/home/', views.user_home, name='user_home'),
+
+
+
+
+
+    
     path('adminportal/home/', views.admin_dashboard, name='admin_dashboard'),  
     path('adminportal/employees/', views.admin_employees, name='admin_employees'),  
     path('adminportal/departments/', views.admin_departments, name='admin_departments'),  

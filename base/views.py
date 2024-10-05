@@ -3,6 +3,8 @@ from . import views
 from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'index.html')
+def user_home(request):
+    return render(request, 'User/Home.html')
 @login_required
 def admin_dashboard(request):
     return render(request, 'admin/dashboard.html')
