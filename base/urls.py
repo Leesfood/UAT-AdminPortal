@@ -52,7 +52,8 @@ urlpatterns = [
     # API routes for customadmin
     path('api/sites/', customadmin_views.site_list, name='site-list'),  # Correctly import API views
     path('api/sites/<int:pk>/', customadmin_views.site_detail, name='site-detail'),
-
+    path('api/leavetypes/',  customadmin_views.leave_type_list, name='leave_type_list'),
+    path('api/leavetypes/<int:pk>/', customadmin_views.leave_type_detail, name='leave_type_detail'),
     # Specify the custom login template
     path('login/', auth_views.LoginView.as_view(template_name='admin/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),

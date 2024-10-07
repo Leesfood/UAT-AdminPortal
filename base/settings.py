@@ -9,8 +9,6 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = ['*']
 # settings.py
 
-
-
 # LOGIN_REDIRECT_URL = '/admin/auth/'
 LOGIN_REDIRECT_URL = '/adminportal/home/'
 LOGOUT_REDIRECT_URL = 'login'
@@ -34,7 +32,6 @@ INSTALLED_APPS = [
     'rest_framework',
   
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,20 +63,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'base.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'adminportal',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres', 
-#         'HOST': 'localhost',   
-#         'PORT': '5432',         
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'adminportal',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres', 
+        'HOST': 'localhost',   
+        'PORT': '5432',         
+    }
 }
+
+# DATABASES = {
+#     'default': dj_database_url.parse(config('DATABASE_URL'))
+# }
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = 'static/'
@@ -107,5 +104,4 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
