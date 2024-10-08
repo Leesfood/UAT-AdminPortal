@@ -30,3 +30,25 @@ class LeaveType(models.Model):
 
     class Meta:
         db_table = 'LeaveType'
+
+class Department(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'department'
+
+
+class Section(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    department = models.ForeignKey(Department, related_name='sections', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'section'

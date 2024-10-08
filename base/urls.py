@@ -1,41 +1,16 @@
-# from django.contrib import admin
-# from django.urls import path
-# from customadmin.admin import custom_admin_site  # Import the custom admin site
-# from . import views  # Import views for your app's homepage or other views
-# from django.contrib.auth import views as auth_views
-# # Define the URL patterns
-# urlpatterns = [
-#     path('admin/', admin.site.urls),  # Default Django admin site
-#     path('customadmin/', custom_admin_site.urls), 
-#     path('', views.home, name="home"),  # Your homepage or other app views
-#     path('user/home/', views.user_home, name='user_home'),
 
-
-#     path('adminportal/home/', views.admin_dashboard, name='admin_dashboard'),  
-#     path('adminportal/employees/', views.admin_employees, name='admin_employees'),  
-#     path('adminportal/departments/', views.admin_departments, name='admin_departments'),  
-#     path('adminportal/sections/', views.admin_sections, name='admin_sections'),  
-#     path('adminportal/sites/', views.admin_sites, name='admin_sites'),  
-#     path('adminportal/leaveTypes/', views.admin_leaveTypes, name='admin_leaveTypes'),  
-#     path('adminportal/reports/', views.admin_reports, name='admin_reports'),
-#     path('adminportal/users/', views.admin_users, name='admin_users'),
-#     path('adminportal/settings/', views.admin_settings, name='admin_settings'),
-#    # Specify the custom login template
-#     path('login/', auth_views.LoginView.as_view(template_name='admin/login.html'), name='login'),
-#     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-# ]
 from django.contrib import admin
 from django.urls import path
-from customadmin.admin import custom_admin_site  # Import the custom admin site
-from base import views as base_views  # Import views for your app's homepage or other views from base
-from customadmin import views as customadmin_views  # Import views for your APIs
+from customadmin.admin import custom_admin_site 
+from base import views as base_views 
+from customadmin import views as customadmin_views 
 from django.contrib.auth import views as auth_views
 
 # Define the URL patterns
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Default Django admin site
+    path('admin/', admin.site.urls),  
     path('customadmin/', custom_admin_site.urls), 
-    path('', base_views.home, name="home"),  # Your homepage or other app views
+    path('', base_views.home, name="home"),
     path('user/home/', base_views.user_home, name='user_home'),
 
     # Admin portal routes
@@ -50,10 +25,14 @@ urlpatterns = [
     path('adminportal/settings/', base_views.admin_settings, name='admin_settings'),
 
     # API routes for customadmin
-    path('api/sites/', customadmin_views.site_list, name='site-list'),  # Correctly import API views
+    path('api/sites/', customadmin_views.site_list, name='site-list'), 
     path('api/sites/<int:pk>/', customadmin_views.site_detail, name='site-detail'),
     path('api/leavetypes/',  customadmin_views.leave_type_list, name='leave_type_list'),
     path('api/leavetypes/<int:pk>/', customadmin_views.leave_type_detail, name='leave_type_detail'),
+    path('api/departments/', customadmin_views.department_list, name='department-list'),
+    path('api/departments/<int:pk>/', customadmin_views.department_detail, name='department-detail'),
+    path('api/sections/', customadmin_views.section_list, name='section-list'),
+    path('api/sections/<int:pk>/', customadmin_views.section_detail, name='section-detail'),
     # Specify the custom login template
     path('login/', auth_views.LoginView.as_view(template_name='admin/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),

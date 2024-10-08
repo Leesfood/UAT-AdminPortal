@@ -4,10 +4,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-# from .models import Site
-# from .serializers import SiteSerializer
-from .models import Site, LeaveType
-from .serializers import SiteSerializer, LeaveTypeSerializer
+from .models import Site, LeaveType, Department, Section
+from .serializers import SiteSerializer, LeaveTypeSerializer,  DepartmentSerializer, SectionSerializer
 from django.http import JsonResponse
 # Existing views
 def home(request):
@@ -104,4 +102,77 @@ def leave_type_detail(request, pk):
 
     elif request.method == 'DELETE':
         leave_type.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def department_list(request):
+    if request.method == 'GET':
+        departments = Department.objects.all()
+        serializer = DepartmentSerializer(departments, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = DepartmentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def department_detail(request, pk):
+    try:
+        department = Department.objects.get(pk=pk)
+    except Department.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = DepartmentSerializer(department)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = DepartmentSerializer(department, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        department.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'POST'])
+def section_list(request):
+    if request.method == 'GET':
+        sections = Section.objects.all()
+        serializer = SectionSerializer(sections, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = SectionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def section_detail(request, pk):
+    try:
+        section = Section.objects.get(pk=pk)
+    except Section.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = SectionSerializer(section)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = SectionSerializer(section, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        section.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
