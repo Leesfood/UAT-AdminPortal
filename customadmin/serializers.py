@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Site, LeaveType ,Department, Section 
+from .models import Site, LeaveType ,Department, Section ,Employee
 
 class SiteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,13 +27,20 @@ class DepartmentSerializer(serializers.ModelSerializer):
 
 # Now define SectionSerializer after DepartmentSerializer
 class SectionSerializer(serializers.ModelSerializer):
-    # Only include department ID to avoid circular references
-    department_id = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all(), source='department')
+    department = serializers.SerializerMethodField()  # Use SerializerMethodField to avoid circular reference
 
     class Meta:
         model = Section
-        fields = ['id', 'name', 'description', 'department_id']  # Include department_id for write operations
+        fields = ['id', 'name', 'description', 'department']
 
+    def get_department(self, obj):
+        # Return department data manually
+        department = obj.department
+        return {
+            'id': department.id,
+            'name': department.name,
+            'description': department.description,
+        }
 # For POST Department
 # {
 #     "name": "IT",
@@ -46,3 +53,48 @@ class SectionSerializer(serializers.ModelSerializer):
 #     "description": "Handles development tasks",
 #     "department": 1
 # }
+# class EmployeeSerializer(serializers.ModelSerializer):
+#     # Use related serializers for site, department, and section
+#     site = SiteSerializer(read_only=True)
+#     department = DepartmentSerializer(read_only=True)
+#     section = SectionSerializer(read_only=True)
+
+#     # Expect the ID for writing operations
+#     site_id = serializers.PrimaryKeyRelatedField(queryset=Site.objects.all(), source='site', write_only=True)
+#     department_id = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all(), source='department', write_only=True)
+#     section_id = serializers.PrimaryKeyRelatedField(queryset=Section.objects.all(), source='section', write_only=True)
+
+#     class Meta:
+#         model = Employee
+#         fields = [
+#             'employee_id', 'employee_name', 'phone', 'email',
+#             'email_approver_l1', 'email_approver_l2', 'email_approver_l3',
+#             'approver_email', 'aknowledge_by', 'site', 'department', 'section',
+#             'site_id', 'department_id', 'section_id',  # These are for write operations
+#             'status', 'allow_date'
+#         ]
+class EmployeeSerializer(serializers.ModelSerializer):
+    site = SiteSerializer(read_only=True)
+    section = SectionSerializer(read_only=True)
+
+    site_id = serializers.PrimaryKeyRelatedField(queryset=Site.objects.all(), source='site', write_only=True)
+    section_id = serializers.PrimaryKeyRelatedField(queryset=Section.objects.all(), source='section', write_only=True)
+
+    class Meta:
+        model = Employee
+        fields = [
+            'employee_id', 'employee_name', 'phone', 'email',
+            'email_approver_l1', 'email_approver_l2', 'email_approver_l3',
+            'approver_email', 'aknowledge_by', 'site', 'site_id', 'section', 'section_id',
+            'status', 'allow_date'
+        ]
+
+    def create(self, validated_data):
+        # Get the section instance from the provided section_id
+        section = validated_data.get('section')
+        
+        # Automatically set the department based on the selected section
+        validated_data['department'] = section.department
+
+        # Create the employee with the updated data
+        return Employee.objects.create(**validated_data)

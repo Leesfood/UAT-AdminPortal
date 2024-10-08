@@ -8,7 +8,6 @@ class MyModel(models.Model):
     def __str__(self):
         return self.name
 
-
 class Site(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=255)
@@ -41,7 +40,6 @@ class Department(models.Model):
     class Meta:
         db_table = 'department'
 
-
 class Section(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -52,3 +50,24 @@ class Section(models.Model):
 
     class Meta:
         db_table = 'section'
+class Employee(models.Model):
+    employee_id = models.CharField(max_length=100, unique=True)
+    employee_name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=20, blank=True)
+    email = models.EmailField()
+    email_approver_l1 = models.EmailField(blank=True)
+    email_approver_l2 = models.EmailField(blank=True)
+    email_approver_l3 = models.EmailField(blank=True)
+    approver_email = models.EmailField()
+    aknowledge_by = models.TextField(help_text="Multiple emails separated by semicolon (;)")
+
+    # Foreign keys
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)  # Ensure this exists
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
+
+    status = models.BooleanField(default=True)
+    allow_date = models.IntegerField(help_text="Allowed days of leave")
+
+    def __str__(self):
+        return self.employee_name

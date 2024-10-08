@@ -33,6 +33,10 @@ urlpatterns = [
     path('api/departments/<int:pk>/', customadmin_views.department_detail, name='department-detail'),
     path('api/sections/', customadmin_views.section_list, name='section-list'),
     path('api/sections/<int:pk>/', customadmin_views.section_detail, name='section-detail'),
+  # Corrected version:
+    path('api/employees/', customadmin_views.employee_list, name='employee-list'),
+    path('api/employees/<int:pk>/', customadmin_views.employee_detail, name='employee-detail'),
+
     # Specify the custom login template
     path('login/', auth_views.LoginView.as_view(template_name='admin/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
