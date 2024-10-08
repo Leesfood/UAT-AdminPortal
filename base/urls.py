@@ -15,7 +15,10 @@ urlpatterns = [
 
     # Admin portal routes
     path('adminportal/home/', base_views.admin_dashboard, name='admin_dashboard'),  
+
     path('adminportal/employees/', base_views.admin_employees, name='admin_employees'),  
+    path('adminportal/employees/add', base_views.add_employees, name='add_employees'),  
+
     path('adminportal/departments/', base_views.admin_departments, name='admin_departments'),  
     path('adminportal/sections/', base_views.admin_sections, name='admin_sections'),  
     path('adminportal/sites/', base_views.admin_sites, name='admin_sites'),  

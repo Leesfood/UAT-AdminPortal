@@ -1,0 +1,232 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Add Employees{% endblock %}
+
+{% block content %}
+<div class="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md w-full">
+    <section class="container mx-auto w-full">
+        <div class="flex items-center gap-3 w-full">
+            <h2 class="text-lg font-medium text-gray-800 dark:text-white">Add Employees</h2>
+        </div>
+
+        <!-- Add your form here -->
+        <form id="add-employee-form">
+            <!-- Employee ID -->
+            <div class="mt-4">
+                <label for="employee_id" class="block text-sm text-gray-700 dark:text-gray-300">Employee ID</label>
+                <input type="number" id="employee_id" name="employee_id" required
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Employee Name -->
+            <div class="mt-4">
+                <label for="employee_name" class="block text-sm text-gray-700 dark:text-gray-300">Employee Name</label>
+                <input type="text" id="employee_name" name="employee_name" required
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Phone -->
+            <div class="mt-4">
+                <label for="phone" class="block text-sm text-gray-700 dark:text-gray-300">Phone</label>
+                <input type="text" id="phone" name="phone" required
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Email -->
+            <div class="mt-4">
+                <label for="email" class="block text-sm text-gray-700 dark:text-gray-300">Email</label>
+                <input type="email" id="email" name="email" required
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Section -->
+            <div class="mt-4">
+                <label for="section" class="block text-sm text-gray-700 dark:text-gray-300">Section</label>
+                <select id="section" name="section_id" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+                    <option value="">Select Section</option>
+                </select>
+            </div>
+
+            <!-- Department (auto-filled based on section) -->
+            <div class="mt-4">
+                <label for="department" class="block text-sm text-gray-700 dark:text-gray-300">Department (Auto-filled)</label>
+                <input type="text" id="department" name="department" disabled
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Sites -->
+            <div class="mt-4">
+                <label for="site" class="block text-sm text-gray-700 dark:text-gray-300">Sites</label>
+                <select id="site" name="site_id" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+                    <option value="">Select Site</option>
+                </select>
+            </div>
+
+            <!-- Email Approvers -->
+            <div class="mt-4">
+                <label for="email_approver_l1" class="block text-sm text-gray-700 dark:text-gray-300">Email Approver L1</label>
+                <input type="text" id="email_approver_l1" name="email_approver_l1" required
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <div class="mt-4">
+                <label for="email_approver_l2" class="block text-sm text-gray-700 dark:text-gray-300">Email Approver L2</label>
+                <input type="text" id="email_approver_l2" name="email_approver_l2"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <div class="mt-4">
+                <label for="email_approver_l3" class="block text-sm text-gray-700 dark:text-gray-300">Email Approver L3</label>
+                <input type="text" id="email_approver_l3" name="email_approver_l3"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Acknowledge By -->
+            <div class="mt-4">
+                <label for="aknowledge_by" class="block text-sm text-gray-700 dark:text-gray-300">Acknowledge By</label>
+                <input type="text" id="aknowledge_by" name="aknowledge_by" required
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Allow Date -->
+            <div class="mt-4">
+                <label for="allow_date" class="block text-sm text-gray-700 dark:text-gray-300">Allow Date</label>
+                <input type="number" id="allow_date" name="allow_date" required
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+            </div>
+
+            <!-- Status -->
+            <div class="mt-4">
+                <label for="status" class="block text-sm text-gray-700 dark:text-gray-300">Status</label>
+                <select id="status" name="status" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-lg">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+            </div>
+
+            <div class="flex justify-end mt-6">
+                <button type="submit"
+                    class="px-6 py-2 text-sm tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-lg hover:bg-blue-600">
+                    Add Employee
+                </button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const API_URL = "/api/employees/";
+
+    // Fetch CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    // Load sections and auto-fill department when a section is selected
+    document.addEventListener('DOMContentLoaded', function () {
+        loadSections();
+        loadSites();
+    });
+
+    // Load sections from API
+    function loadSections() {
+        axios.get('/api/sections/')
+            .then(response => {
+                const sections = response.data;
+                const sectionSelect = document.getElementById('section');
+
+                sections.forEach(section => {
+                    const option = document.createElement('option');
+                    option.value = section.id;
+                    option.textContent = section.name;
+                    sectionSelect.appendChild(option);
+                });
+
+                sectionSelect.addEventListener('change', function() {
+                    const selectedSection = sections.find(section => section.id == sectionSelect.value);
+                    if (selectedSection) {
+                        document.getElementById('department').value = selectedSection.department.name;
+                    } else {
+                        document.getElementById('department').value = '';  // Clear if no section is selected
+                    }
+                });
+            })
+            .catch(error => {
+                console.error("Error loading sections:", error);
+            });
+    }
+
+    // Load sites from API
+    function loadSites() {
+        axios.get('/api/sites/')
+            .then(response => {
+                const sites = response.data;
+                const siteSelect = document.getElementById('site');
+
+                sites.forEach(site => {
+                    const option = document.createElement('option');
+                    option.value = site.id;
+                    option.textContent = site.name;
+                    siteSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error("Error loading sites:", error);
+            });
+    }
+
+    // Handle form submission
+    document.getElementById('add-employee-form').addEventListener('submit', function (event) {
+        event.preventDefault();  // Prevent the default form submission
+
+        const formData = {
+            employee_id: document.getElementById('employee_id').value,
+            employee_name: document.getElementById('employee_name').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value,
+            status: document.getElementById('status').value,
+            section_id: document.getElementById('section').value,  // Ensure section ID is sent
+            site_id: document.getElementById('site').value,  // Ensure site ID is sent
+            email_approver_l1: document.getElementById('email_approver_l1').value,
+            email_approver_l2: document.getElementById('email_approver_l2').value,
+            email_approver_l3: document.getElementById('email_approver_l3').value,
+            approver_email: document.getElementById('email_approver_l1').value,  // Approver email same as L1 for now
+            aknowledge_by: document.getElementById('aknowledge_by').value,
+            allow_date: document.getElementById('allow_date').value,
+        };
+
+
+        axios.post(API_URL, formData, {
+            headers: {
+                'X-CSRFToken': csrftoken
+            }
+        })
+        .then(response => {
+            Swal.fire('Success', 'Employee added successfully!', 'success').then(() => {
+                window.location.href = "/adminportal/employees/";  // Redirect to the employee list page
+            });
+        })
+
+        .catch(error => {
+            Swal.fire('Error', 'There was an issue adding the employee.', 'error');
+        });
+    });
+</script>
+
+{% endblock %}

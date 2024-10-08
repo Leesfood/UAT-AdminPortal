@@ -30,26 +30,22 @@ class LeaveType(models.Model):
     class Meta:
         db_table = 'LeaveType'
 
+from django.db import models
+
 class Department(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
     description = models.TextField()
 
     def __str__(self):
         return self.name
 
-    class Meta:
-        db_table = 'department'
 
+# models.py
 class Section(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
     description = models.TextField()
-    department = models.ForeignKey(Department, related_name='sections', on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name='sections')
 
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        db_table = 'section'
 class Employee(models.Model):
     employee_id = models.CharField(max_length=100, unique=True)
     employee_name = models.CharField(max_length=255)

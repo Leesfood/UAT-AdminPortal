@@ -12,6 +12,27 @@ class LeaveTypeSerializer(serializers.ModelSerializer):
         fields = ['id', 'name_kh', 'name_en', 'description', 'status']
 
 # Define DepartmentSerializer first
+class SectionSerializer(serializers.ModelSerializer):
+    # Use PrimaryKeyRelatedField to handle department for POST/PUT requests
+    department_id = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all(), source='department')
+
+    # Still return full department data when reading (GET requests)
+    department = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Section
+        fields = ['id', 'name', 'description', 'department', 'department_id']  # department_id for POST, department for GET
+
+    def get_department(self, obj):
+        # Manually return department data without nesting
+        department = obj.department
+        return {
+            'id': department.id,
+            'name': department.name,
+            'description': department.description,
+        }
+
+# DepartmentSerializer to show department and its related sections
 class DepartmentSerializer(serializers.ModelSerializer):
     sections = serializers.SerializerMethodField()  # Nested SectionSerializer to show related sections
 
@@ -19,28 +40,11 @@ class DepartmentSerializer(serializers.ModelSerializer):
         model = Department
         fields = ['id', 'name', 'description', 'sections']  # Include sections field
 
-    # Custom method to get related sections
     def get_sections(self, obj):
-        sections = obj.sections.all()  # Assuming 'sections' is the related name in the Section model
+        # Use the related_name 'sections' for reverse lookup
+        sections = obj.sections.all()  # 'sections' is the related_name in the ForeignKey
         return SectionSerializer(sections, many=True, read_only=True).data
 
-
-# Now define SectionSerializer after DepartmentSerializer
-class SectionSerializer(serializers.ModelSerializer):
-    department = serializers.SerializerMethodField()  # Use SerializerMethodField to avoid circular reference
-
-    class Meta:
-        model = Section
-        fields = ['id', 'name', 'description', 'department']
-
-    def get_department(self, obj):
-        # Return department data manually
-        department = obj.department
-        return {
-            'id': department.id,
-            'name': department.name,
-            'description': department.description,
-        }
 # For POST Department
 # {
 #     "name": "IT",

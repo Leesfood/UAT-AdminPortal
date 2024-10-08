@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from . import views
+
 from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'index.html')
@@ -11,6 +12,9 @@ def admin_dashboard(request):
 @login_required
 def admin_employees(request):
     return render(request, 'admin/employees.html')
+@login_required
+def add_employees(request):
+   return render(request, 'admin/actionemployee/AddEmployees.html')
 @login_required
 def admin_departments(request):
     return render(request, 'admin/departments.html')
